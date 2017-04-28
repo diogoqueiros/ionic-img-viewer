@@ -30,6 +30,13 @@ image-viewer.ion-page {
         will-change: opacity;
     }
 
+    .image-close {
+        padding: 4px;
+        .image-close-button {
+            color: white;
+        }
+    }
+
     .image-wrapper {
         position: relative;
         z-index: 10;
@@ -38,7 +45,7 @@ image-viewer.ion-page {
         overflow: hidden;
         flex-direction: column;
 
-        margin-top: 56px;
+        margin-top: 42px;
 
         flex-grow: 1;
         justify-content: center;
