@@ -18,11 +18,13 @@ import { ImageViewerZoomGesture } from './image-viewer-zoom-gesture';
     selector: 'image-viewer',
     template: `		
       <ion-header>
-        <ion-buttons left class="image-close">
-          <button ion-button (click)="dismiss($event)" icon-only class="image-close-button">
-            <ion-icon name="close"></ion-icon>
-          </button>
-        </ion-buttons>
+        <ion-toolbar no-lines>
+          <ion-buttons left class="image-close">
+            <button ion-button (click)="dismiss($event)" icon-only class="image-close-button">
+              <ion-icon name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+        </ion-toolbar>
       </ion-header>
   
       <ion-backdrop></ion-backdrop>

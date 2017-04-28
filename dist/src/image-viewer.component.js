@@ -44,7 +44,7 @@ export var ImageViewerComponent = (function (_super) {
     ImageViewerComponent.decorators = [
         { type: Component, args: [{
                     selector: 'image-viewer',
-                    template: "\t\t\n      <ion-header>\n        <ion-buttons left class=\"image-close\">\n          <button ion-button (click)=\"dismiss($event)\" icon-only class=\"image-close-button\">\n            <ion-icon name=\"close\"></ion-icon>\n          </button>\n        </ion-buttons>\n      </ion-header>\n  \n      <ion-backdrop></ion-backdrop>\n  \n      <div class=\"image-wrapper\">\n        <div class=\"image\" #imageContainer>\n          <img [src]=\"imageUrl\" tappable />\n        </div>\n      </div>\n\t"
+                    template: "\t\t\n      <ion-header>\n        <ion-toolbar no-lines>\n          <ion-buttons left class=\"image-close\">\n            <button ion-button (click)=\"dismiss($event)\" icon-only class=\"image-close-button\">\n              <ion-icon name=\"close\"></ion-icon>\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n      </ion-header>\n  \n      <ion-backdrop></ion-backdrop>\n  \n      <div class=\"image-wrapper\">\n        <div class=\"image\" #imageContainer>\n          <img [src]=\"imageUrl\" tappable />\n        </div>\n      </div>\n\t"
                 },] },
     ];
     /** @nocollapse */
