@@ -3,17 +3,18 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-import { DomController, NavController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
+import { App, DomController, NavController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
 import { ElementRef, Renderer, Component, NgZone, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageViewerTransitionGesture } from './image-viewer-transition-gesture';
 import { ImageViewerZoomGesture } from './image-viewer-zoom-gesture';
 export var ImageViewerComponent = (function (_super) {
     __extends(ImageViewerComponent, _super);
-    function ImageViewerComponent(_gestureCtrl, elementRef, _nav, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
+    function ImageViewerComponent(_gestureCtrl, elementRef, app, _nav, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
         _super.call(this, _config, elementRef, renderer);
         this._gestureCtrl = _gestureCtrl;
         this.elementRef = elementRef;
+        this.app = app;
         this._nav = _nav;
         this._zone = _zone;
         this.renderer = renderer;
@@ -25,7 +26,7 @@ export var ImageViewerComponent = (function (_super) {
     ImageViewerComponent.prototype.ngOnInit = function () {
         var _this = this;
         var gestureCallBack = function () { return _this._nav.pop(); };
-        this._zone.runOutsideAngular(function () { return _this.dragGesture = new ImageViewerTransitionGesture(_this.platform, _this, _this.domCtrl, _this.renderer, gestureCallBack); });
+        this._zone.runOutsideAngular(function () { return _this.dragGesture = new ImageViewerTransitionGesture(_this.platform, _this, _this.app, _this.domCtrl, _this.renderer, gestureCallBack); });
     };
     ImageViewerComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -50,6 +51,7 @@ export var ImageViewerComponent = (function (_super) {
     ImageViewerComponent.ctorParameters = function () { return [
         { type: GestureController, },
         { type: ElementRef, },
+        { type: App, },
         { type: NavController, },
         { type: NgZone, },
         { type: Renderer, },

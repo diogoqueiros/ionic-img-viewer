@@ -11,7 +11,7 @@ var MAX_ATTACK_ANGLE = 45;
 var DRAG_THRESHOLD = 70;
 export var ImageViewerTransitionGesture = (function (_super) {
     __extends(ImageViewerTransitionGesture, _super);
-    function ImageViewerTransitionGesture(platform, component, domCtrl, renderer, cb) {
+    function ImageViewerTransitionGesture(platform, component, app, domCtrl, renderer, cb) {
         _super.call(this, platform, component.getNativeElement(), {
             maxAngle: MAX_ATTACK_ANGLE,
             threshold: HAMMER_THRESHOLD,
@@ -20,6 +20,7 @@ export var ImageViewerTransitionGesture = (function (_super) {
             domController: domCtrl
         });
         this.component = component;
+        this.app = app;
         this.renderer = renderer;
         this.cb = cb;
         this.translationY = 0;
@@ -35,6 +36,7 @@ export var ImageViewerTransitionGesture = (function (_super) {
         if (this.isPinching(ev)) {
             this.abort(ev);
         }
+        this.app._setDisableScroll(true);
         var coord = pointerCoord(ev);
         this.startY = coord.y;
         return true;
@@ -59,6 +61,7 @@ export var ImageViewerTransitionGesture = (function (_super) {
     ImageViewerTransitionGesture.prototype.onDragEnd = function (ev) {
         if (Math.abs(this.translationY) > DRAG_THRESHOLD) {
             this.cb();
+            this.app._setDisableScroll(false);
         }
         else {
             var imageContainerAnimation = new Animation(this.plt, this.imageContainer);

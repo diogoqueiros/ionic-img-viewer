@@ -1,4 +1,5 @@
 import {
+  App,
   DomController,
   NavController,
   NavParams,
@@ -47,6 +48,7 @@ export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, Afte
 
     constructor(public _gestureCtrl: GestureController,
                 public elementRef: ElementRef,
+                private app: App,
                 private _nav: NavController,
                 private _zone: NgZone,
                 private renderer: Renderer,
@@ -63,7 +65,7 @@ export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, Afte
 
     ngOnInit() {
         let gestureCallBack = () => this._nav.pop();
-        this._zone.runOutsideAngular(() => this.dragGesture = new ImageViewerTransitionGesture(this.platform, this, this.domCtrl, this.renderer, gestureCallBack));
+        this._zone.runOutsideAngular(() => this.dragGesture = new ImageViewerTransitionGesture(this.platform, this, this.app, this.domCtrl, this.renderer, gestureCallBack));
     }
 
     ngAfterViewInit() {
