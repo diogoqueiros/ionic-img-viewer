@@ -1,7 +1,6 @@
 import {
   DomController,
   NavController,
-  ViewController,
   NavParams,
   Ion,
   GestureController,
@@ -49,7 +48,6 @@ export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, Afte
     constructor(public _gestureCtrl: GestureController,
                 public elementRef: ElementRef,
                 private _nav: NavController,
-                private viewCtrl: ViewController,
                 private _zone: NgZone,
                 private renderer: Renderer,
                 private domCtrl: DomController,
@@ -80,6 +78,6 @@ export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, Afte
 
     dismiss(event: any): void {
       event.preventDefault();
-      this.viewCtrl.dismiss();
+      this._nav.pop();
     }
 }

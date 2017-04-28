@@ -3,19 +3,18 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-import { DomController, NavController, ViewController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
+import { DomController, NavController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
 import { ElementRef, Renderer, Component, NgZone, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageViewerTransitionGesture } from './image-viewer-transition-gesture';
 import { ImageViewerZoomGesture } from './image-viewer-zoom-gesture';
 export var ImageViewerComponent = (function (_super) {
     __extends(ImageViewerComponent, _super);
-    function ImageViewerComponent(_gestureCtrl, elementRef, _nav, viewCtrl, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
+    function ImageViewerComponent(_gestureCtrl, elementRef, _nav, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
         _super.call(this, _config, elementRef, renderer);
         this._gestureCtrl = _gestureCtrl;
         this.elementRef = elementRef;
         this._nav = _nav;
-        this.viewCtrl = viewCtrl;
         this._zone = _zone;
         this.renderer = renderer;
         this.domCtrl = domCtrl;
@@ -39,7 +38,7 @@ export var ImageViewerComponent = (function (_super) {
     };
     ImageViewerComponent.prototype.dismiss = function (event) {
         event.preventDefault();
-        this.viewCtrl.dismiss();
+        this._nav.pop();
     };
     ImageViewerComponent.decorators = [
         { type: Component, args: [{
@@ -52,7 +51,6 @@ export var ImageViewerComponent = (function (_super) {
         { type: GestureController, },
         { type: ElementRef, },
         { type: NavController, },
-        { type: ViewController, },
         { type: NgZone, },
         { type: Renderer, },
         { type: DomController, },
