@@ -9,12 +9,19 @@ Thumbs.db
 .vscode
 
 # Ignored files
-*.js
+#*.js
 *.map
-*.d.ts
+#*.d.ts
 *.css
 *.tgz
 
 # Ignored folders
-dist
+#dist
 aot
+
+# JetBrains
+.idea
+.project
+.settings
+.idea/*
+*.iml

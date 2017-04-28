@@ -3,18 +3,19 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-import { DomController, NavController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
+import { DomController, NavController, ViewController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
 import { ElementRef, Renderer, Component, NgZone, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageViewerTransitionGesture } from './image-viewer-transition-gesture';
 import { ImageViewerZoomGesture } from './image-viewer-zoom-gesture';
 export var ImageViewerComponent = (function (_super) {
     __extends(ImageViewerComponent, _super);
-    function ImageViewerComponent(_gestureCtrl, elementRef, _nav, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
+    function ImageViewerComponent(_gestureCtrl, elementRef, _nav, viewCtrl, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
         _super.call(this, _config, elementRef, renderer);
         this._gestureCtrl = _gestureCtrl;
         this.elementRef = elementRef;
         this._nav = _nav;
+        this.viewCtrl = viewCtrl;
         this._zone = _zone;
         this.renderer = renderer;
         this.domCtrl = domCtrl;
@@ -36,10 +37,14 @@ export var ImageViewerComponent = (function (_super) {
         this.dragGesture && this.dragGesture.destroy();
         this.pinchGesture && this.pinchGesture.destroy();
     };
+    ImageViewerComponent.prototype.dismiss = function (event) {
+        event.preventDefault();
+        this.viewCtrl.dismiss();
+    };
     ImageViewerComponent.decorators = [
         { type: Component, args: [{
                     selector: 'image-viewer',
-                    template: "\n\t\t<ion-header>\n\t\t\t<ion-navbar>\n\t\t\t</ion-navbar>\n\t\t</ion-header>\n\n\t\t<ion-backdrop></ion-backdrop>\n\n\t\t<div class=\"image-wrapper\">\n\t\t\t<div class=\"image\" #imageContainer>\n\t\t\t\t<img [src]=\"imageUrl\" tappable />\n\t\t\t</div>\n\t\t</div>\n\t"
+                    template: "\t\t\n      <ion-header>\n        <ion-toolbar no-lines>\n          <ion-buttons left>\n            <button ion-button (click)=\"dismiss($event)\" icon-only>\n              <ion-icon name=\"close\"></ion-icon>\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n      </ion-header>\n  \n      <ion-backdrop></ion-backdrop>\n  \n      <div class=\"image-wrapper\">\n        <div class=\"image\" #imageContainer>\n          <img [src]=\"imageUrl\" tappable />\n        </div>\n      </div>\n\t"
                 },] },
     ];
     /** @nocollapse */
@@ -47,6 +52,7 @@ export var ImageViewerComponent = (function (_super) {
         { type: GestureController, },
         { type: ElementRef, },
         { type: NavController, },
+        { type: ViewController, },
         { type: NgZone, },
         { type: Renderer, },
         { type: DomController, },
