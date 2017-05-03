@@ -1,6 +1,6 @@
 import { Renderer } from '@angular/core';
 import { ImageViewerComponent } from './image-viewer.component';
-import { PanGesture } from 'ionic-angular/gestures/drag-gesture';
+import { PanGesture } from 'ionic-angular/gestures/pan-gesture';
 import { pointerCoord } from 'ionic-angular/util/dom';
 import { Platform } from 'ionic-angular/platform/platform';
 import { App, Animation, DomController } from 'ionic-angular';
@@ -17,7 +17,7 @@ export class ImageViewerTransitionGesture extends PanGesture {
 	private imageContainer: HTMLElement;
 	private backdrop: HTMLElement;
 
-	constructor(platform: Platform, private component: ImageViewerComponent, private app: App, domCtrl: DomController, private renderer: Renderer, private cb: Function) {
+	constructor(platform: Platform, private component: ImageViewerComponent, /*private app: App,*/ domCtrl: DomController, private renderer: Renderer, private cb: Function) {
 		super(platform, component.getNativeElement(), {
 			maxAngle: MAX_ATTACK_ANGLE,
 			threshold: HAMMER_THRESHOLD,
@@ -43,7 +43,7 @@ export class ImageViewerTransitionGesture extends PanGesture {
 			this.abort(ev);
 		}
 
-		this.app._setDisableScroll(true);
+		// this.app._setDisableScroll(true);
 
 		let coord = pointerCoord(ev);
 		this.startY = coord.y;
@@ -75,7 +75,7 @@ export class ImageViewerTransitionGesture extends PanGesture {
 
 		if (Math.abs(this.translationY) > DRAG_THRESHOLD) {
 			this.cb();
-			this.app._setDisableScroll(false);
+			// this.app._setDisableScroll(false);
 		} else {
 			let imageContainerAnimation = new Animation(this.plt, this.imageContainer);
 			let backdropAnimation = new Animation(this.plt, this.backdrop);
