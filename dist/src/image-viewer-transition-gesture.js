@@ -1,32 +1,37 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-import { PanGesture } from 'ionic-angular/gestures/drag-gesture';
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { PanGesture } from 'ionic-angular/gestures/pan-gesture';
 import { pointerCoord } from 'ionic-angular/util/dom';
 import { Animation } from 'ionic-angular';
 var HAMMER_THRESHOLD = 10;
 var MAX_ATTACK_ANGLE = 45;
 var DRAG_THRESHOLD = 70;
-export var ImageViewerTransitionGesture = (function (_super) {
+var ImageViewerTransitionGesture = (function (_super) {
     __extends(ImageViewerTransitionGesture, _super);
-    function ImageViewerTransitionGesture(platform, component, app, domCtrl, renderer, cb) {
-        _super.call(this, platform, component.getNativeElement(), {
+    function ImageViewerTransitionGesture(platform, component, /*private app: App,*/ domCtrl, renderer, cb) {
+        var _this = _super.call(this, platform, component.getNativeElement(), {
             maxAngle: MAX_ATTACK_ANGLE,
             threshold: HAMMER_THRESHOLD,
             gesture: component._gestureCtrl.createGesture({ name: 'image-viewer' }),
             direction: 'y',
             domController: domCtrl
-        });
-        this.component = component;
-        this.app = app;
-        this.renderer = renderer;
-        this.cb = cb;
-        this.translationY = 0;
-        this.imageContainer = component.getNativeElement().querySelector('.image');
-        this.backdrop = component.getNativeElement().querySelector('ion-backdrop');
-        this.listen();
+        }) || this;
+        _this.component = component;
+        _this.renderer = renderer;
+        _this.cb = cb;
+        _this.translationY = 0;
+        _this.imageContainer = component.getNativeElement().querySelector('.image');
+        _this.backdrop = component.getNativeElement().querySelector('ion-backdrop');
+        _this.listen();
+        return _this;
     }
     // As we handle both pinch and drag, we have to make sure we don't drag when we are trying to pinch
     ImageViewerTransitionGesture.prototype.isPinching = function (ev) {
@@ -36,7 +41,7 @@ export var ImageViewerTransitionGesture = (function (_super) {
         if (this.isPinching(ev)) {
             this.abort(ev);
         }
-        this.app._setDisableScroll(true);
+        // this.app._setDisableScroll(true);
         var coord = pointerCoord(ev);
         this.startY = coord.y;
         return true;
@@ -61,7 +66,7 @@ export var ImageViewerTransitionGesture = (function (_super) {
     ImageViewerTransitionGesture.prototype.onDragEnd = function (ev) {
         if (Math.abs(this.translationY) > DRAG_THRESHOLD) {
             this.cb();
-            this.app._setDisableScroll(false);
+            // this.app._setDisableScroll(false);
         }
         else {
             var imageContainerAnimation = new Animation(this.plt, this.imageContainer);
@@ -79,4 +84,5 @@ export var ImageViewerTransitionGesture = (function (_super) {
     };
     return ImageViewerTransitionGesture;
 }(PanGesture));
+export { ImageViewerTransitionGesture };
 //# sourceMappingURL=image-viewer-transition-gesture.js.map

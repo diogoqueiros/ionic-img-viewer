@@ -1,36 +1,41 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 import { Animation, Gesture } from 'ionic-angular';
 import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from 'ionic-angular/gestures/hammer';
 var MAX_SCALE = 3;
-export var ImageViewerZoomGesture = (function (_super) {
+var ImageViewerZoomGesture = (function (_super) {
     __extends(ImageViewerZoomGesture, _super);
     function ImageViewerZoomGesture(component, element, platform, renderer) {
-        var _this = this;
-        _super.call(this, element.nativeElement);
-        this.component = component;
-        this.platform = platform;
-        this.renderer = renderer;
-        this.adjustScale = 1;
-        this.adjustDeltaX = 0;
-        this.adjustDeltaY = 0;
-        this.currentScale = 1;
-        this.currentDeltaX = 0;
-        this.currentDeltaY = 0;
-        this.allowedXMargin = 0;
-        this.allowedYMargin = 0;
+        var _this = _super.call(this, element.nativeElement) || this;
+        _this.component = component;
+        _this.platform = platform;
+        _this.renderer = renderer;
+        _this.adjustScale = 1;
+        _this.adjustDeltaX = 0;
+        _this.adjustDeltaY = 0;
+        _this.currentScale = 1;
+        _this.currentDeltaX = 0;
+        _this.currentDeltaY = 0;
+        _this.allowedXMargin = 0;
+        _this.allowedYMargin = 0;
         // Force both directions after super to avoid override allowing only one direction
-        this.options({ direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL });
-        this.listen();
-        this.on('pinch', function (e) { return _this.onPinch(e); });
-        this.on('pinchend', function (e) { return _this.onPinchEnd(e); });
-        this.on('panstart', function (e) { return _this.onPanStart(e); });
-        this.on('pan', function (e) { return _this.onPan(e); });
-        this.on('panend', function (e) { return _this.onPanEnd(e); });
-        this.on('doubletap', function (e) { return _this.onDoubleTap(e); });
+        _this.options({ direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL });
+        _this.listen();
+        _this.on('pinch', function (e) { return _this.onPinch(e); });
+        _this.on('pinchend', function (e) { return _this.onPinchEnd(e); });
+        _this.on('panstart', function (e) { return _this.onPanStart(e); });
+        _this.on('pan', function (e) { return _this.onPan(e); });
+        _this.on('panend', function (e) { return _this.onPanEnd(e); });
+        _this.on('doubletap', function (e) { return _this.onDoubleTap(e); });
+        return _this;
     }
     ImageViewerZoomGesture.prototype.onPinch = function (event) {
         this.component.dragGesture.abort(event);
@@ -107,4 +112,5 @@ export var ImageViewerZoomGesture = (function (_super) {
     };
     return ImageViewerZoomGesture;
 }(Gesture));
+export { ImageViewerZoomGesture };
 //# sourceMappingURL=image-viewer-zoom-gesture.js.map

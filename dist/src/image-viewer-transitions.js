@@ -1,19 +1,18 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-import { Transition, Animation } from 'ionic-angular';
-export function registerCustomTransitions(config) {
-    return function () {
-        config.setTransition('image-viewer-enter', ImageViewerEnter);
-        config.setTransition('image-viewer-leave', ImageViewerLeave);
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
-}
-export var ImageViewerEnter = (function (_super) {
+})();
+import { Transition, Animation } from 'ionic-angular';
+var ImageViewerEnter = (function (_super) {
     __extends(ImageViewerEnter, _super);
     function ImageViewerEnter() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     ImageViewerEnter.prototype.init = function () {
         var ele = this.enteringView.pageRef().nativeElement;
@@ -46,10 +45,11 @@ export var ImageViewerEnter = (function (_super) {
     };
     return ImageViewerEnter;
 }(Transition));
-export var ImageViewerLeave = (function (_super) {
+export { ImageViewerEnter };
+var ImageViewerLeave = (function (_super) {
     __extends(ImageViewerLeave, _super);
     function ImageViewerLeave() {
-        _super.apply(this, arguments);
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     ImageViewerLeave.prototype.init = function () {
         var ele = this.leavingView.pageRef().nativeElement;
@@ -80,4 +80,5 @@ export var ImageViewerLeave = (function (_super) {
     };
     return ImageViewerLeave;
 }(Transition));
+export { ImageViewerLeave };
 //# sourceMappingURL=image-viewer-transitions.js.map

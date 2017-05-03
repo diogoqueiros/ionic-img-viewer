@@ -1,32 +1,38 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-import { App, DomController, NavController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+import { DomController, NavController, NavParams, Ion, GestureController, Config, Platform } from 'ionic-angular';
 import { ElementRef, Renderer, Component, NgZone, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ImageViewerTransitionGesture } from './image-viewer-transition-gesture';
 import { ImageViewerZoomGesture } from './image-viewer-zoom-gesture';
-export var ImageViewerComponent = (function (_super) {
+var ImageViewerComponent = (function (_super) {
     __extends(ImageViewerComponent, _super);
-    function ImageViewerComponent(_gestureCtrl, elementRef, app, _nav, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
-        _super.call(this, _config, elementRef, renderer);
-        this._gestureCtrl = _gestureCtrl;
-        this.elementRef = elementRef;
-        this.app = app;
-        this._nav = _nav;
-        this._zone = _zone;
-        this.renderer = renderer;
-        this.domCtrl = domCtrl;
-        this.platform = platform;
+    function ImageViewerComponent(_gestureCtrl, elementRef, _nav, _zone, renderer, domCtrl, platform, _navParams, _config, _sanitizer) {
+        var _this = _super.call(this, _config, elementRef, renderer) || this;
+        _this._gestureCtrl = _gestureCtrl;
+        _this.elementRef = elementRef;
+        _this._nav = _nav;
+        _this._zone = _zone;
+        _this.renderer = renderer;
+        _this.domCtrl = domCtrl;
+        _this.platform = platform;
         var url = _navParams.get('image');
-        this.imageUrl = _sanitizer.bypassSecurityTrustUrl(url);
+        _this.imageUrl = _sanitizer.bypassSecurityTrustUrl(url);
+        return _this;
     }
     ImageViewerComponent.prototype.ngOnInit = function () {
         var _this = this;
-        var gestureCallBack = function () { return _this._nav.pop(); };
-        this._zone.runOutsideAngular(function () { return _this.dragGesture = new ImageViewerTransitionGesture(_this.platform, _this, _this.app, _this.domCtrl, _this.renderer, gestureCallBack); });
+        var navPop = function () { return _this._nav.pop(); };
+        this.unregisterBackButton = this.platform.registerBackButtonAction(navPop);
+        this._zone.runOutsideAngular(function () { return _this.dragGesture = new ImageViewerTransitionGesture(_this.platform, _this, _this.domCtrl, _this.renderer, navPop); });
     };
     ImageViewerComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
@@ -36,34 +42,35 @@ export var ImageViewerComponent = (function (_super) {
     ImageViewerComponent.prototype.ngOnDestroy = function () {
         this.dragGesture && this.dragGesture.destroy();
         this.pinchGesture && this.pinchGesture.destroy();
+        this.unregisterBackButton();
     };
     ImageViewerComponent.prototype.dismiss = function (event) {
         event.preventDefault();
         this._nav.pop();
     };
-    ImageViewerComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'image-viewer',
-                    template: "\t\t\n      <ion-header>\n        <ion-toolbar no-lines>\n          <ion-buttons left>\n            <button ion-button (click)=\"dismiss($event)\" icon-only>\n              <ion-icon name=\"close\"></ion-icon>\n            </button>\n          </ion-buttons>\n        </ion-toolbar>\n      </ion-header>\n  \n      <ion-backdrop></ion-backdrop>\n  \n      <div class=\"image-wrapper\">\n        <div class=\"image\" #imageContainer>\n          <img [src]=\"imageUrl\" tappable />\n        </div>\n      </div>\n\t"
-                },] },
-    ];
-    /** @nocollapse */
-    ImageViewerComponent.ctorParameters = function () { return [
-        { type: GestureController, },
-        { type: ElementRef, },
-        { type: App, },
-        { type: NavController, },
-        { type: NgZone, },
-        { type: Renderer, },
-        { type: DomController, },
-        { type: Platform, },
-        { type: NavParams, },
-        { type: Config, },
-        { type: DomSanitizer, },
-    ]; };
-    ImageViewerComponent.propDecorators = {
-        'imageContainer': [{ type: ViewChild, args: ['imageContainer',] },],
-    };
     return ImageViewerComponent;
 }(Ion));
+export { ImageViewerComponent };
+ImageViewerComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'image-viewer',
+                template: "\t\t\n\t\t<ion-header>\n      <ion-toolbar no-lines>\n        <ion-buttons left>\n          <button ion-button (click)=\"dismiss($event)\" icon-only>\n            <ion-icon name=\"close\"></ion-icon>\n          </button>\n        </ion-buttons>\n      </ion-toolbar>\n    </ion-header>\n   \n    <ion-backdrop></ion-backdrop>\n    \n    <div class=\"image-wrapper\">\n      <div class=\"image\" #imageContainer>\n        <img [src]=\"imageUrl\" tappable />\n      </div>\n    </div>\n\t"
+            },] },
+];
+/** @nocollapse */
+ImageViewerComponent.ctorParameters = function () { return [
+    { type: GestureController, },
+    { type: ElementRef, },
+    { type: NavController, },
+    { type: NgZone, },
+    { type: Renderer, },
+    { type: DomController, },
+    { type: Platform, },
+    { type: NavParams, },
+    { type: Config, },
+    { type: DomSanitizer, },
+]; };
+ImageViewerComponent.propDecorators = {
+    'imageContainer': [{ type: ViewChild, args: ['imageContainer',] },],
+};
 //# sourceMappingURL=image-viewer.component.js.map
