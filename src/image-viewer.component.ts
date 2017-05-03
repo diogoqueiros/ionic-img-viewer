@@ -88,4 +88,10 @@ export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, Afte
 
 		this.unregisterBackButton();
 	}
+
+  dismiss(event: any): void {
+    event.preventDefault();
+    this._nav.pop();
+  }
+
 }
