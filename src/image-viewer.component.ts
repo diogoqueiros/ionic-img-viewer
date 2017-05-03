@@ -20,19 +20,24 @@ import { ImageViewerEnter, ImageViewerLeave } from './image-viewer-transitions';
 
 @Component({
 	selector: 'image-viewer',
-	template: `
+	template: `		
 		<ion-header>
-			<ion-navbar>
-			</ion-navbar>
-		</ion-header>
-
-		<ion-backdrop></ion-backdrop>
-
-		<div class="image-wrapper">
-			<div class="image" #imageContainer>
-				<img [src]="imageUrl" tappable />
-			</div>
-		</div>
+      <ion-toolbar no-lines>
+        <ion-buttons left>
+          <button ion-button (click)="dismiss($event)" icon-only>
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+   
+    <ion-backdrop></ion-backdrop>
+    
+    <div class="image-wrapper">
+      <div class="image" #imageContainer>
+        <img [src]="imageUrl" tappable />
+      </div>
+    </div>
 	`
 })
 export class ImageViewerComponent extends Ion implements OnInit, OnDestroy, AfterViewInit {
